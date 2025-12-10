@@ -15,6 +15,7 @@
     nota3 <input id="iptN3" type="number"><br>
     <br>
     <button onclick="cadastro()">Cadastrar</button>
+    <button onclick="listar()">Listar</button>
     <br><br>
     <div id="msg"></div>
 </body>
@@ -75,11 +76,33 @@
                 n3: n3
             }
             vtAluno.push(aluno);
-            msg.innerHTML= `Aluno <b>${nome}</b> foi cadastrado com sucesso`
+            msg.innerHTML = `Aluno <b>${nome}</b> foi cadastrado com sucesso`
             console.table(vtAluno)
 
+        }
+    }
 
+    function listar() {
+         msg.innerHTML ="";
+        let ordem = prompt("Você gostaria de ver a lista de trás para frente?(1) ou de frente para trás?(2)")
+        if (ordem == '1') {
+            ordem = 'Decrescente'
+        } else if (ordem == '2') {
+            ordem = 'Crescente'
+        }
 
+        if (ordem == 'Decrescente') {
+            for (let index = vtAluno.length-1; index >= 0; index--) {
+                msg.innerHTML += `Aluno: ${vtAluno[index].nome} – N1: ${vtAluno[index].n1}  – N2: ${vtAluno[index].n2}  – N3: ${vtAluno[index].n3}  – Média: ${((vtAluno[index].n1 + vtAluno[index].n2 + vtAluno[index].n3) / 3).toFixed(1)}  – ${ordem}<br>`
+            }
+        }
+        else if (ordem == 'Crescente') {
+            for (let index = 0; index < vtAluno.length; index++) {
+                msg.innerHTML += `Aluno: ${vtAluno[index].nome} – N1: ${vtAluno[index].n1}  – N2: ${vtAluno[index].n2}  – N3: ${vtAluno[index].n3}  – Média: ${((vtAluno[index].n1 + vtAluno[index].n2 + vtAluno[index].n3) / 3).toFixed(1)}  – ${ordem}<br>`
+            }
+
+        }else{
+            msg.innerHTML = `Escolha uma ordem correta`
         }
     }
 
