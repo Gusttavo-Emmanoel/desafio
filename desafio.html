@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Notas</title>
+</head>
+
+<body>
+    nome aluno <input id="iptNome">
+    <br>
+    nota1 <input id="iptN1" type="number"><br>
+    nota2 <input id="iptN2" type="number"><br>
+    nota3 <input id="iptN3" type="number"><br>
+    <br>
+    <button onclick="cadastro()">Cadastrar</button>
+    <br><br>
+    <div id="msg"></div>
+</body>
+<script>
+    let vtAluno = [];
+
+    function cadastro() {
+        let nome = iptNome.value;
+        let n1 = Number(iptN1.value);
+        let n2 = Number(iptN2.value);
+        let n3 = Number(iptN3.value);
+
+        let erro = "";
+        msg.innerHTML = "";
+
+        // Validação
+        let existe = false;
+        for (let index = 0; index < vtAluno.length; index++) {
+            if (nome.toLowerCase() == vtAluno[index].nome.toLowerCase()) {
+                existe = true;
+            }
+
+        }
+
+        if (nome == "" || iptN1.value == "" || iptN2.value == "" || iptN3.value == "") {
+            erro += `O <b>nome</b> ou as <b>notas</b> não podem estar vazios <br>`
+        }
+
+        if (nome.length < 9) {
+            erro += `O <b>nome</b> não pode ter menos que 9 caracteres <br>`
+        }
+
+        if (existe) {
+            erro += `O <b>nome</b> não pode estar duplicado <br>`
+        }
+
+        if (n1 < 0 || n1 > 10) {
+            erro += `A <b>nota1</b> tem que estar entre 0 e 10 <br>`
+        }
+
+        if (n2 < 0 || n2 > 10) {
+            erro += `A <b>nota2</b> tem que estar entre 0 e 10 <br>`
+
+        }
+
+        if (n3 < 0 || n3 > 10) {
+            erro += `A <b>nota3</b> tem que estar entre 0 e 10 <br>`
+
+        }
+
+        if (erro != "") {
+            msg.innerHTML = erro
+        } else {
+            let aluno = {
+                nome: nome,
+                n1: n1,
+                n2: n2,
+                n3: n3
+            }
+            vtAluno.push(aluno);
+            msg.innerHTML= `Aluno <b>${nome}</b> foi cadastrado com sucesso`
+            console.table(vtAluno)
+
+
+
+        }
+    }
+
+</script>
+
+</html>
