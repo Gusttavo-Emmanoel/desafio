@@ -16,7 +16,6 @@
     <br>
     <button onclick="cadastro()">Cadastrar</button>
     <button onclick="listar()">Listar</button>
-    <button onclick="buscarAluno()">Buscar Aluno</button>
     <br><br>
     <div id="msg"></div>
 </body>
@@ -70,21 +69,21 @@
         if (erro != "") {
             msg.innerHTML = erro
         } else {
+            let media = (n1 + n2 + n3) / 3;
             let aluno = {
                 nome: nome,
                 n1: n1,
                 n2: n2,
-                n3: n3
+                n3: n3,
+                media: media
             }
             vtAluno.push(aluno);
             msg.innerHTML = `Aluno <b>${nome}</b> foi cadastrado com sucesso`
-            console.table(vtAluno)
-
         }
     }
 
     function listar() {
-         msg.innerHTML ="";
+        msg.innerHTML = "";
         let ordem = prompt("Você gostaria de ver a lista de trás para frente?(1) ou de frente para trás?(2)")
         if (ordem == '1') {
             ordem = 'Decrescente'
@@ -93,19 +92,54 @@
         }
 
         if (ordem == 'Decrescente') {
-            for (let index = vtAluno.length-1; index >= 0; index--) {
-                msg.innerHTML += `Aluno: ${vtAluno[index].nome} – N1: ${vtAluno[index].n1}  – N2: ${vtAluno[index].n2}  – N3: ${vtAluno[index].n3}  – Média: ${((vtAluno[index].n1 + vtAluno[index].n2 + vtAluno[index].n3) / 3).toFixed(1)}  – ${ordem}<br>`
+            for (let index = vtAluno.length - 1; index >= 0; index--) {
+                msg.innerHTML += `Aluno: ${vtAluno[index].nome} – N1: ${vtAluno[index].n1}  – N2: ${vtAluno[index].n2}  – N3: ${vtAluno[index].n3}  – Média: ${vtAluno[index].media.toFixed(2)}  – ${ordem}<br>`
             }
         }
         else if (ordem == 'Crescente') {
             for (let index = 0; index < vtAluno.length; index++) {
-                msg.innerHTML += `Aluno: ${vtAluno[index].nome} – N1: ${vtAluno[index].n1}  – N2: ${vtAluno[index].n2}  – N3: ${vtAluno[index].n3}  – Média: ${((vtAluno[index].n1 + vtAluno[index].n2 + vtAluno[index].n3) / 3).toFixed(1)}  – ${ordem}<br>`
+                msg.innerHTML += `Aluno: ${vtAluno[index].nome} – N1: ${vtAluno[index].n1}  – N2: ${vtAluno[index].n2}  – N3: ${vtAluno[index].n3}  – Média: ${vtAluno[index].media.toFixed(2)}  – ${ordem}<br>`
             }
 
-        }else{
+        } else {
             msg.innerHTML = `Escolha uma ordem correta`
         }
     }
+
+    function media() {
+        if (vtAluno.length > 0) {
+            let media = prompt('Você gostaria de ver a maior média?(1) ou a menor média?(2).')
+
+            let maior = vtAluno[0].media;
+            let menor = vtAluno[0].media;
+            let indexMaior = 0;
+            let indexMenor = 0;
+
+            for (let index = 0; index < vtAluno.length; index++) {
+                if (vtAluno[index].media > maior) {
+                    maior = vtAluno[index].media;
+                    indexMaior = index
+                }
+                if (vtAluno[index].media < menor) {
+                    menor = vtAluno[index].media
+                    indexMenor = index;
+                }
+            }
+           
+            if (media == '1') {
+                msg.innerHTML = `Aluno: ${vtAluno[indexMaior].nome} – N1: ${vtAluno[indexMaior].n1}  – N2: ${vtAluno[indexMaior].n2}  – N3: ${vtAluno[indexMaior].n3}  – Média: ${vtAluno[indexMaior].media.toFixed(2)}`
+
+            } else if (media == '2') {
+                msg.innerHTML = `Aluno: ${vtAluno[indexMenor].nome} – N1: ${vtAluno[indexMenor].n1}  – N2: ${vtAluno[indexMenor].n2}  – N3: ${vtAluno[indexMenor].n3}  – Média: ${vtAluno[indexMenor].media.toFixed(2)}`
+            }else{
+                // msg.innerHTML = "Informe um (1) para a maior média ou (2) para a menor média."
+                media();
+            }
+        } else {
+            msg.innerHTML = "Não tem alunos cadastrado."
+        }
+    }
+
 function buscarAluno() {
         let nomeAluno = prompt("Qual o nome do aluno que você esta buscando ?");
         let res;
