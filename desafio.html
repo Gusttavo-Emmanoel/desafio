@@ -16,6 +16,7 @@
     <br>
     <button onclick="cadastro()">Cadastrar</button>
     <button onclick="listar()">Listar</button>
+    <button onclick="buscarAluno()">Buscar Aluno</button>
     <br><br>
     <div id="msg"></div>
 </body>
@@ -105,7 +106,20 @@
             msg.innerHTML = `Escolha uma ordem correta`
         }
     }
+function buscarAluno() {
+        let nomeAluno = prompt("Qual o nome do aluno que você esta buscando ?");
+        let res;
 
+        for (let index = 0; index < vtAluno.length; index++) {
+            if (nomeAluno.toLowerCase() == vtAluno[index].nome.toLowerCase()) {
+                res = `Aluno: ${vtAluno[index].nome} – N1: ${vtAluno[index].n1}  – N2: ${vtAluno[index].n2}  – N3: ${vtAluno[index].n3}  – Média: ${((vtAluno[index].n1 + vtAluno[index].n2 + vtAluno[index].n3) / 3).toFixed(1)}`;
+                break
+            } else {
+                res = `O aluno ${nomeAluno} não foi cadastrado.`
+            }
+        }
+        msg.innerHTML = res;
+    }
 </script>
 
 </html>
